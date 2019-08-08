@@ -76,6 +76,16 @@ namespace SteamInventoryTest
             SteamInventory.DestroyResult(currentResult);
             currentResult = SteamInventoryResult_t.Invalid;
 
+            // Not a Steamworks demo, but we can find total number of each item by aggregating,
+            // if they don't stack.
+            Console.WriteLine();
+            Console.WriteLine("Aggregated total of items by definition");
+            Console.WriteLine("Definition number\tQuanity");
+            foreach (var group in currentDetails.GroupBy(itm => itm.m_iDefinition))
+            {
+                Console.WriteLine($"{group.Key}\t{group.Sum(itm => itm.m_unQuantity)}");
+            }
+
             nextAction = null;
             InteractiveGetDetails();
         }
