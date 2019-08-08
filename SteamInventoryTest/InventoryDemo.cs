@@ -168,7 +168,7 @@ namespace SteamInventoryTest
                 }
             }
 
-            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine(new string('-', 80));
 
             // Print item definition properties
             Console.WriteLine($"Definition number: {item.m_iDefinition}");
