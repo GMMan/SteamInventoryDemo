@@ -9,8 +9,6 @@ namespace SteamInventoryTest
 {
     class Program
     {
-        static bool shouldExit;
-
         static void Main(string[] args)
         {
             if (!SteamAPI.Init())
@@ -20,7 +18,7 @@ namespace SteamInventoryTest
             {
                 InventoryDemo demo = new InventoryDemo();
                 demo.RunDemo();
-                while (!shouldExit)
+                while (!demo.IsDemoComplete)
                 {
                     SteamAPI.RunCallbacks();
                     //System.Threading.Thread.Sleep(16);
@@ -43,11 +41,6 @@ namespace SteamInventoryTest
             Console.WriteLine(message);
             Console.ReadKey(true);
             Environment.Exit(exitCode);
-        }
-
-        public static void ExitApp()
-        {
-            shouldExit = true;
         }
     }
 }

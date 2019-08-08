@@ -19,6 +19,8 @@ namespace SteamInventoryTest
         Callback<SteamInventoryResultReady_t> resultReadyCallback;
         Callback<SteamInventoryFullUpdate_t> fullUpdateCallback;
         Callback<SteamInventoryDefinitionUpdate_t> definitionUpdateCallback;
+
+        public bool IsDemoComplete { get; private set; }
         
         public InventoryDemo()
         {
@@ -45,6 +47,8 @@ namespace SteamInventoryTest
         {
             // Demo 1: get all items
             EnsureNoOngoingOperation();
+            IsDemoComplete = false;
+
             SteamInventoryResult_t result;
             if (!SteamInventory.GetAllItems(out result))
                 throw new InvalidOperationException("Failed to get all items. You're probably running this as a server.");
@@ -103,7 +107,7 @@ namespace SteamInventoryTest
                 if (!int.TryParse(input, out selectedIndex))
                 {
                     nextAction = null;
-                    Program.ExitApp();
+                    IsDemoComplete = true;
                     break;
                 }
 
@@ -219,7 +223,7 @@ namespace SteamInventoryTest
                 SteamInventory.DestroyResult(currentResult);
                 currentResult = SteamInventoryResult_t.Invalid;
             }
-            Program.ExitApp();
+            IsDemoComplete = true;
         }
 
         void ResultReadyCallbackHandler(SteamInventoryResultReady_t param)
