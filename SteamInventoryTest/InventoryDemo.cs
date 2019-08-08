@@ -102,6 +102,7 @@ namespace SteamInventoryTest
                 int selectedIndex;
                 if (!int.TryParse(input, out selectedIndex))
                 {
+                    nextAction = null;
                     Program.ExitApp();
                     break;
                 }
