@@ -25,8 +25,8 @@ namespace SteamInventoryTest
         public InventoryDemo()
         {
             resultReadyCallback = Callback<SteamInventoryResultReady_t>.Create(ResultReadyCallbackHandler);
-            fullUpdateCallback = Callback<SteamInventoryFullUpdate_t>.Create(FullUpdateCallbackHandler);
-            definitionUpdateCallback = Callback<SteamInventoryDefinitionUpdate_t>.Create(DefinitionUpdateCallbackHandler);
+            fullUpdateCallback = Callback<SteamInventoryFullUpdate_t>.Create(GenericCallbackHandler);
+            definitionUpdateCallback = Callback<SteamInventoryDefinitionUpdate_t>.Create(GenericCallbackHandler);
         }
 
         void EnsureNoOngoingOperation()
@@ -231,7 +231,7 @@ namespace SteamInventoryTest
             Console.WriteLine($"Received {nameof(SteamInventoryResultReady_t)} callback.");
             if (param.m_handle == currentResult)
             {
-                if (nextAction != null) nextAction();
+                nextAction?.Invoke();
             }
             else
             {
@@ -239,14 +239,9 @@ namespace SteamInventoryTest
             }
         }
 
-        void FullUpdateCallbackHandler(SteamInventoryFullUpdate_t param)
+        void GenericCallbackHandler<T>(T param) where T: struct
         {
-            Console.WriteLine($"Received {nameof(SteamInventoryFullUpdate_t)} callback.");
-        }
-
-        void DefinitionUpdateCallbackHandler(SteamInventoryDefinitionUpdate_t param)
-        {
-            Console.WriteLine($"Received {nameof(SteamInventoryDefinitionUpdate_t)} callback.");
+            Console.WriteLine($"Received {typeof(T).Name} callback.");
         }
     }
 }
