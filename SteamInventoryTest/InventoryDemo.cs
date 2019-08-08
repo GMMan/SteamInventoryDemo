@@ -53,10 +53,10 @@ namespace SteamInventoryTest
             if (!SteamInventory.GetAllItems(out result))
                 throw new InvalidOperationException("Failed to get all items. You're probably running this as a server.");
             currentResult = result;
-            nextAction = ListItems;
+            nextAction = LoadItemDetails;
         }
 
-        void ListItems()
+        void LoadItemDetails()
         {
             EnsureStatusOK();
             Console.WriteLine("Items obtained.");
