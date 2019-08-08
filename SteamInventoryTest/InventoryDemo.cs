@@ -214,7 +214,11 @@ namespace SteamInventoryTest
 
         void EndDemo()
         {
-            currentResult = SteamInventoryResult_t.Invalid;
+            if (currentResult != SteamInventoryResult_t.Invalid)
+            {
+                SteamInventory.DestroyResult(currentResult);
+                currentResult = SteamInventoryResult_t.Invalid;
+            }
             Program.ExitApp();
         }
 
