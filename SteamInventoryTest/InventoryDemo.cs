@@ -106,8 +106,7 @@ namespace SteamInventoryTest
                 int selectedIndex;
                 if (!int.TryParse(input, out selectedIndex))
                 {
-                    nextAction = null;
-                    IsDemoComplete = true;
+                    EndDemo();
                     break;
                 }
 
@@ -223,6 +222,8 @@ namespace SteamInventoryTest
                 SteamInventory.DestroyResult(currentResult);
                 currentResult = SteamInventoryResult_t.Invalid;
             }
+            nextAction = null;
+            currentDetails = null;
             IsDemoComplete = true;
         }
 
